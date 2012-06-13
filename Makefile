@@ -10,11 +10,11 @@
 #####################
 # Macro Definitions #
 #####################
-ERL 	= erl
-ERLC    = erlc
-MAKE 	= make
+ERL	= erl
+ERLC	= erlc
+MAKE	= make
 SHELL	= /bin/sh
-RM 	= /bin/rm -rf
+RM	= /bin/rm -rf
 
 
 ##############################
@@ -22,13 +22,20 @@ RM 	= /bin/rm -rf
 ##############################
 
 all:
+	rebar compile
+
+include/%.hrl:
 	thrift --gen erl scribe.thrift
-	cp example.erl gen-erl
-	cp -f gen-erl/*.erl src/
-	cp -f gen-erl/*.hrl include/
-	cp src/*.app ebin/
-	erlc -o ebin -I ./include src/*.erl
+	mv -f gen-erl/*.hrl include/
+
+src/%.erl:
+	thrift --gen erl scribe.thrift
+	mv -f gen-erl/*.erl src/
+
+ungen:
+	-$(RM) gen-erl
+	-$(RM) include/*.hrl
+
 
 clean:
-	-$(RM) gen-erl
-	-$(RM) ebin/*
+	rebar clean
