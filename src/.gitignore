@@ -1,5 +1,3 @@
 *.~*
 *.beam
 *.old
-*_thrift.erl
-*_types.erl

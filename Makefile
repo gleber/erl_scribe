@@ -21,14 +21,16 @@ RM	= /bin/rm -rf
 # Basic Compile Instructions #
 ##############################
 
-all:
+all: thrift
 	rebar compile
 
-include/%.hrl:
+thrift: include/scribe_thrift.hrl src/scribe_thrift.erl
+
+include/scribe_thrift.hrl: scribe.thrift
 	thrift --gen erl scribe.thrift
 	mv -f gen-erl/*.hrl include/
 
-src/%.erl:
+src/scribe_thrift.erl: scribe.thrift
 	thrift --gen erl scribe.thrift
 	mv -f gen-erl/*.erl src/
 

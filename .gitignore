@@ -1,5 +1,6 @@
 *.~*
 *.beam
 *.old
+/.rebar/
 /gen-erl/
 /src/example.erl
